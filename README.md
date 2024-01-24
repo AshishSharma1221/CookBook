@@ -1,9 +1,9 @@
 #This is a Music App for Capstone Final Project.
 
-Group Members:
-Ashish Sharma,
-Pawandeep Singh,
-Bala Gayathri
+GOLDENMUSIC
+
+Group Name: Group B (Cross-Section):
+Ashish Sharma
 
 The app contains following features:
 1) Multi screen feature using tab navigation.
