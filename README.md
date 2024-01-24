@@ -1,12 +1,19 @@
-**GoldenMusic**
-#GoldenMusic is your go-to music app for a fantastic listening experience. Designed as a capstone project, it's user-friendly and makes exploring music a breeze. With a clean and easy-to-use interface, finding and enjoying your favorite tunes has never been simpler.
+# **GoldenMusic**
 
-Group B (Cross-Section):
+### GoldenMusic is your go-to music app for a fantastic listening experience. Designed as a capstone project, it's user-friendly and makes exploring music a breeze. With a clean and easy-to-use interface, finding and enjoying your favorite tunes has never been simpler.
+
+## Group B (Cross-Section):
 - Ashish Sharma
 - Pawandeep Singh
 - BalaGayathri Bopparaju
 
-The app contains following features:
+## Development Environment:
+- React-native
+- VS Code
+- Git
+- Jira
+
+## Features:
 1) Multi screen feature using tab navigation.
 2) The app contains Home Screen to showcase the music/Songs, Search Screen with a search bar to search the song and a profile screen to update the personal details like Profile Picture, Name, etc.
 3) This app is using an API which is used to fetch songs from the Deezer API.
