@@ -18,4 +18,4 @@ The app contains following features:
 9) Push a notification to remind the user to play some music on daily basis.
 10) Search a song using voice recognition.
 11) Create a playlist and update it when needed.
-12) User-Data stored in SQL/NoSQL(to be finalized later.
+12) User-Data stored in SQL/NoSQL(to be finalized later).
