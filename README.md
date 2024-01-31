@@ -1,6 +1,6 @@
-# **Curry CraftBook**
+# **CookBook**
 
-### Embark on a culinary journey through the vibrant and diverse world of Indian cuisine with Curry CraftBook! Immerse yourself in the rich tapestry of flavors, aromas, and spices that make cooking truly extraordinary. From the sizzling streets of Delhi to the serene kitchens of Toronto, Curry CraftBook is your passport to an exquisite array of authentic recipes, each telling a story of tradition and innovation.
+### Embark on a culinary journey through the vibrant and diverse world of Indian cuisine with CookBook! Immerse yourself in the rich tapestry of flavors, aromas, and spices that make cooking truly extraordinary. From the sizzling streets of Delhi to the serene kitchens of Toronto, CookBook is your passport to an exquisite array of authentic recipes, each telling a story of tradition and innovation.
 
 ## Group B (Cross-Section):
 - Ashish Sharma
