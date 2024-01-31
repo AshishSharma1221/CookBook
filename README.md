@@ -20,7 +20,7 @@
 3) Recipes Details Screen
 4) Photo Gallery
 5) Offline download recipes
-6) Ingredients List
+6) Tab Navigation
 7) Recipes by Ingredient
 8) Search
 9) Share recipe with others
