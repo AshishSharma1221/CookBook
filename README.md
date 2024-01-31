@@ -1,4 +1,4 @@
-# **GoldenMusic**
+# **Curry CratBook**
 
 ### GoldenMusic is your go-to music app for a fantastic listening experience. Designed as a capstone project, it's user-friendly and makes exploring music a breeze. With a clean and easy-to-use interface, finding and enjoying your favorite tunes has never been simpler.
 
