@@ -1,87 +1,73 @@
-
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-// npm i @react-navigation/bottom-tabs react-native-elements
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { Icon } from 'react-native-elements';
-function HomeScreen() {
-return (
-<View style={styles.container}>
-<Text style={styles.text}>Home Data</Text>
-</View>
-);
-}
-function SearchScreen() {
-return (
-<View style={styles.container}>
-<Text style={styles.text}>Search Data </Text>
-</View>
-);
-}
-function ProfileScreen() {
-return (
-<View style={styles.container}>
-<Text style={styles.text}>Profile Data</Text>
-</View>
-);
-}
-const Tab = createBottomTabNavigator();
-export default function ReactNavigationBottomTabs() {
-return (
-  <NavigationContainer>
-<Tab.Navigator
-tabBarOptions={
-{
-// Default Color is blue you can change it by following props
-// activeTintColor: '#ff4757',
-// inactiveTintColor: '#ff6b81',
-// Default Background Color is white you can change it by following props
-// activeBackgroundColor: '#ced6e0',
-// inactiveBackgroundColor: '#ced6e0',
-}
-}
->
-<Tab.Screen
-name='Home'
-component={HomeScreen}
-options={{
-tabBarIcon: ({ color, size }) => (
-<Icon name='home' color={color} size={size} />
-),
-}}
-/>
-<Tab.Screen
-name='Search'
-component={SearchScreen}
-options={{
-tabBarIcon: ({ color, size }) => (
-<Icon name='message' color={color} size={size} />
-),
-}}
-/>
-<Tab.Screen
-name='Profile'
-component={ProfileScreen}
-options={{
-tabBarIcon: ({ color, size }) => (
-<Icon name='person' color={color} size={size} />
-),
-}}
-/>
-</Tab.Navigator>
-</NavigationContainer>
-);
-}
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import RecipeListScreen from './RecipeListScreen';
+import RecipeDetailsScreen from './RecipeDetailsScreen';
+import CategoriesScreen from './CategoriesScreen'; 
+import { useTheme } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const styles = StyleSheet.create({
-container: {
-flex: 1,
-alignItems: 'center',
-justifyContent: 'center',
-},
-text: {
-fontSize: 40,
-fontWeight: 'bold',
-},
-});
+const Stack = createStackNavigator();
+const MaterialBottomTab = createMaterialBottomTabNavigator();
+
+const RecipeListStack = () => {
+  const theme = useTheme();
+  return (
+    <Stack.Navigator
+      initialRouteName="RecipeList"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.primary,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}
+    >
+      <Stack.Screen
+        name="RecipeList"
+        component={RecipeListScreen}
+        options={{ title: 'CookBook' }}
+      />
+      <Stack.Screen
+        name="RecipeDetails"
+        component={RecipeDetailsScreen}
+        options={({ route }) => ({ title: route.params.recipe.strMeal })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const App = () => {
+  const theme = useTheme();
+  return (
+    <NavigationContainer>
+      <MaterialBottomTab.Navigator
+        initialRouteName="Recipes"
+        shifting={true}
+        barStyle={{ backgroundColor: theme.colors.primary }}
+      >
+        <MaterialBottomTab.Screen
+          name="Recipes"
+          component={RecipeListStack}
+          options={{
+            tabBarIcon: 'home',
+            tabBarLabel: 'Recipes',
+          }}
+        />
+        <MaterialBottomTab.Screen
+          name="Categories"
+          component={CategoriesScreen}
+          options={{
+            tabBarIcon: ({ color }) => <Icon name="bars" size={20} color={color} />,
+            tabBarLabel: 'Categories',
+          }}
+        />
+      </MaterialBottomTab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
