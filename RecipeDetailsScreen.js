@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailsContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
     paddingHorizontal: 20,
     alignItems: 'center',
   },
