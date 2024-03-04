@@ -5,6 +5,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import RecipeListScreen from './RecipeListScreen';
 import RecipeDetailsScreen from './RecipeDetailsScreen';
 import CategoriesScreen from './CategoriesScreen'; 
+import SearchScreen from './SearchScreen';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -55,6 +56,14 @@ const App = () => {
           options={{
             tabBarIcon: 'home',
             tabBarLabel: 'Recipes',
+          }}
+        />
+         <MaterialBottomTab.Screen
+          name="SearchScreen"
+          component={SearchScreen}
+          options={{
+            tabBarIcon: 'magnify',
+            tabBarLabel: 'Search',
           }}
         />
         <MaterialBottomTab.Screen
