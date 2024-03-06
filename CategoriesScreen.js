@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity } from 'react-native';
 
-const CategoriesScreen = () => {
+const CategoriesScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,10 +21,14 @@ const CategoriesScreen = () => {
     }
   };
 
+  const handleCategoryPress = (category) => {
+    navigation.navigate('FilteredRecipes', { category });
+  };
+
   const renderCategoryItem = ({ item }) => (
-    <View style={styles.categoryItem}>
+    <TouchableOpacity style={styles.categoryItem} onPress={() => handleCategoryPress(item.strCategory)}>
       <Text style={styles.categoryName}>{item.strCategory}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   if (loading) {
