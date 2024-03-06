@@ -5,7 +5,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import RecipeListScreen from './RecipeListScreen';
 import RecipeDetailsScreen from './RecipeDetailsScreen';
 import CategoriesScreen from './CategoriesScreen'; 
-import FilteredRecipes from './FilteredRecipes';
 import SearchScreen from './SearchScreen';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, TextInput, Button, FlatList, Text, StyleSheet, SafeAreaView } from 'react-native';
 
-const SearchBar = ({ navigation }) => {
+const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -22,10 +22,6 @@ const SearchBar = ({ navigation }) => {
     }
   };
 
-  const handleRecipePress = (recipe) => {
-    navigation.navigate('RecipeDetails', { recipe });
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -43,10 +39,10 @@ const SearchBar = ({ navigation }) => {
           data={searchResults}
           keyExtractor={(item) => item.idMeal}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.item} onPress={() => handleRecipePress(item)}>
+            <View style={styles.item}>
               <Text>{item.strMeal}</Text>
               {/* Add more details as needed */}
-            </TouchableOpacity>
+            </View>
           )}
         />
       </View>
@@ -75,10 +71,6 @@ const styles = StyleSheet.create({
   },
   item: {
     marginBottom: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
   },
 });
 
