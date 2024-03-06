@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
 
-const CategoriesScreen = () => {
+const CategoriesScreen = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,11 +21,9 @@ const CategoriesScreen = () => {
     }
   };
 
-  const renderCategoryItem = ({ item }) => (
-    <View style={styles.categoryItem}>
-      <Text style={styles.categoryName}>{item.strCategory}</Text>
-    </View>
-  );
+  const handleCategoryPress = (category) => {
+    navigation.navigate('FilteredRecipes', { category });
+  };
 
   if (loading) {
     return (
@@ -37,11 +35,20 @@ const CategoriesScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={categories}
-        keyExtractor={(item) => item.idCategory}
-        renderItem={renderCategoryItem}
-      />
+      <ScrollView>
+        <View style={styles.categoriesContainer}>
+          {categories.map((category) => (
+            <TouchableOpacity
+              key={category.idCategory}
+              style={styles.categoryItem}
+              onPress={() => handleCategoryPress(category.strCategory)}
+            >
+              <Image source={{ uri: category.strCategoryThumb }} style={styles.categoryImage} />
+              <Text style={styles.categoryName}>{category.strCategory}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -53,13 +60,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
+  categoriesContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   categoryItem: {
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    width: '48%', 
+    marginBottom: 20,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  categoryImage: {
+    width: '100%',
+    height: 150,
+    resizeMode: 'cover',
   },
   categoryName: {
     fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingVertical: 10,
   },
 });
 

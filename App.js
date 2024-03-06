@@ -37,6 +37,11 @@ const RecipeListStack = () => {
         component={RecipeDetailsScreen}
         options={({ route }) => ({ title: route.params.recipe.strMeal })}
       />
+      <Stack.Screen 
+        name="FilteredRecipes"
+        component={FilteredRecipes}
+        options={({ route }) => ({ title: route.params.category })}
+      />
     </Stack.Navigator>
   );
 };
