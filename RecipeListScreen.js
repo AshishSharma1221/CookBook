@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SectionList, TouchableOpacity, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, SectionList, TouchableOpacity, Dimensions, ImageBackground, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const RecipeListScreen = () => {
@@ -100,33 +100,35 @@ const RecipeListScreen = () => {
   };  
 
   return (
-    <ImageBackground
-      source={orientation === 'portrait' ? require('./portrait_bg.png') : require('./landscape_bg.png')}
-      style={styles.backgroundImage}
-    >
-      <View style={styles.container}>
-        <SectionList
-          ref={sectionListRef}
-          sections={groupedRecipes()}
-          keyExtractor={(item, index) => item.idMeal + index}
-          renderItem={renderItem}
-          renderSectionHeader={renderSectionHeader}
-          stickySectionHeadersEnabled={false}
-        />
-        {loading && <Text>Loading...</Text>}
-        <View style={styles.sliderContainer}>
-          {availableLetters.map(letter => (
-            <TouchableOpacity
-              key={letter}
-              style={styles.sliderItem}
-              onPress={() => handleLetterPress(letter)}
-            >
-              <Text style={styles.sliderItemText}>{letter}</Text>
-            </TouchableOpacity>
-          ))}
+    <SafeAreaView style={{ flex: 1 }}>
+      <ImageBackground
+        source={orientation === 'portrait' ? require('./portrait_bg.png') : require('./landscape_bg.png')}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.container}>
+          <SectionList
+            ref={sectionListRef}
+            sections={groupedRecipes()}
+            keyExtractor={(item, index) => item.idMeal + index}
+            renderItem={renderItem}
+            renderSectionHeader={renderSectionHeader}
+            stickySectionHeadersEnabled={false}
+          />
+          {loading && <Text>Loading...</Text>}
+          <View style={styles.sliderContainer}>
+            {availableLetters.map(letter => (
+              <TouchableOpacity
+                key={letter}
+                style={styles.sliderItem}
+                onPress={() => handleLetterPress(letter)}
+              >
+                <Text style={styles.sliderItemText}>{letter}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
