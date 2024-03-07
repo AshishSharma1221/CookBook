@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import SplashScreen from './SplashScreen';
 import RecipeListScreen from './RecipeListScreen';
 import RecipeDetailsScreen from './RecipeDetailsScreen';
 import CategoriesScreen from './CategoriesScreen'; 
@@ -48,39 +49,61 @@ const RecipeListStack = () => {
 };
 
 const App = () => {
-  const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
+  const theme = useTheme(); 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
+    return () => clearTimeout(timer);
+  }, []);
+
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2000); 
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <NavigationContainer>
-      <MaterialBottomTab.Navigator
-        initialRouteName="Recipes"
-        shifting={true}
-        barStyle={{ backgroundColor: theme.colors.primary }}
-      >
-        <MaterialBottomTab.Screen
-          name="Recipes"
-          component={RecipeListStack}
-          options={{
-            tabBarIcon: 'home',
-            tabBarLabel: 'Recipes',
-          }}
-        />
-         <MaterialBottomTab.Screen
-          name="SearchScreen"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: 'magnify',
-            tabBarLabel: 'Search',
-          }}
-        />
-        <MaterialBottomTab.Screen
-          name="Categories"
-          component={CategoriesScreen}
-          options={{
-            tabBarIcon: ({ color }) => <Icon name="bars" size={20} color={color} />,
-            tabBarLabel: 'Categories',
-          }}
-        />
-      </MaterialBottomTab.Navigator>
+      {isLoading ? (
+        <SplashScreen />
+      ) : (
+        <MaterialBottomTab.Navigator
+          initialRouteName="Recipes"
+          shifting={true}
+          barStyle={{ backgroundColor: theme.colors.primary }}
+        >
+          <MaterialBottomTab.Screen
+            name="Recipes"
+            component={RecipeListStack}
+            options={{
+              tabBarIcon: 'home',
+              tabBarLabel: 'Recipes',
+            }}
+          />
+          <MaterialBottomTab.Screen
+            name="SearchScreen"
+            component={SearchScreen}
+            options={{
+              tabBarIcon: 'magnify',
+              tabBarLabel: 'Search',
+            }}
+          />
+          <MaterialBottomTab.Screen
+            name="Categories"
+            component={CategoriesScreen}
+            options={{
+              tabBarIcon: ({ color }) => <Icon name="bars" size={20} color={color} />,
+              tabBarLabel: 'Categories',
+            }}
+          />
+        </MaterialBottomTab.Navigator>
+      )}
     </NavigationContainer>
   );
 };
