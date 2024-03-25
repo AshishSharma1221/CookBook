@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, TextInput, Button, FlatList, Text, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 
-const SearchBar = () => {
+const SearchBar = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
@@ -22,29 +22,43 @@ const SearchBar = () => {
     }
   };
 
+  const handleRecipePress = (recipe) => {
+    navigation.navigate('RecipeDetails', { recipe });
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Search for food recipes..."
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Search for food recipes..."
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
 
-        <Button title="Search" onPress={handleSearch} />
+          <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+            <Text style={styles.searchButtonText}>Search</Text>
+          </TouchableOpacity>
+        </View>
 
-        <FlatList
-          style={styles.list}
-          data={searchResults}
-          keyExtractor={(item) => item.idMeal}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Text>{item.strMeal}</Text>
-              {/* Add more details as needed */}
-            </View>
-          )}
-        />
+        {searchResults.length > 0 ? (
+          <FlatList
+            style={styles.list}
+            data={searchResults}
+            keyExtractor={(item) => item.idMeal}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.item} onPress={() => handleRecipePress(item)}>
+                <Image source={{ uri: item.strMealThumb }} style={styles.thumbnail} />
+                <Text style={styles.itemText}>{item.strMeal}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        ) : (
+          <View style={styles.placeholderContainer}>
+            <Text style={styles.placeholderText}>No search results</Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -57,20 +71,64 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 50
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
   },
   input: {
+    flex: 1,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
+    borderRadius: 5,
+    marginRight: 10,
     paddingLeft: 10,
+  },
+  searchButton: {
+    backgroundColor: '#007bff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    paddingHorizontal: 20,
+  },
+  searchButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
   list: {
     marginTop: 20,
   },
   item: {
     marginBottom: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemText: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  thumbnail: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  placeholderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  placeholderImage: {
+    width: 200,
+    height: 200,
   },
 });
 

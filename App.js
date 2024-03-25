@@ -103,6 +103,7 @@ const App = () => {
               tabBarLabel: 'Categories',
             }}
           />
+
           <MaterialBottomTab.Screen
             name="PhotoGallery"
             component={PhotoGalleryScreen}
