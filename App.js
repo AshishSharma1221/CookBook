@@ -8,6 +8,7 @@ import RecipeDetailsScreen from './RecipeDetailsScreen';
 import CategoriesScreen from './CategoriesScreen'; 
 import FilteredRecipes from './FilteredRecipes';
 import SearchScreen from './SearchScreen';
+import PhotoGalleryScreen from './PhotoGalleryScreen';
 import { useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -100,6 +101,15 @@ const App = () => {
             options={{
               tabBarIcon: ({ color }) => <Icon name="bars" size={20} color={color} />,
               tabBarLabel: 'Categories',
+            }}
+          />
+
+          <MaterialBottomTab.Screen
+            name="PhotoGallery"
+            component={PhotoGalleryScreen}
+            options={{
+              tabBarIcon: 'image',
+              tabBarLabel: 'Gallery',
             }}
           />
         </MaterialBottomTab.Navigator>
