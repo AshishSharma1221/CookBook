@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, ImageBackground, TouchableOpacity, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, TouchableOpacity, Linking, TextInput } from 'react-native';
 
 const RecipeDetailsScreen = ({ route, navigation }) => {
   const { recipe } = route.params;
+  const [rating, setRating] = useState('');
+  const [isRatingSubmitted, setIsRatingSubmitted] = useState(false);
 
   const renderIngredients = () => {
     const ingredients = [];
@@ -20,6 +22,12 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
     return ingredients;
   };
 
+  const submitRating = () => {
+    console.log('Rating submitted:', rating);
+    setRating('');
+    setIsRatingSubmitted(true);
+  };
+
   return (
     <ImageBackground source={{ uri: recipe.strMealThumb }} style={styles.backgroundImage} opacity={0.7}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -31,6 +39,23 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
           {renderIngredients()}
           <Text style={styles.instructionsTitle}>Instructions: </Text> 
           <Text style={styles.instructions}>{recipe.strInstructions}</Text>
+          {!isRatingSubmitted && (
+            <View style={styles.ratingContainer}>
+              <TextInput
+                style={[styles.ratingInput, { backgroundColor: 'white' }]} 
+                onChangeText={setRating}
+                value={rating}
+                keyboardType="numeric"
+                placeholder="Rate this recipe (1-5)"
+              />
+              <TouchableOpacity style={styles.submitButton} onPress={submitRating}>
+                <Text style={styles.submitButtonText}>Submit Rating</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {isRatingSubmitted && (
+            <Text style={styles.submittedMessage}>Thanks for submitting rating!</Text>
+          )}
           {recipe.strYoutube && (
             <TouchableOpacity
               style={styles.youtubeButton}
@@ -112,6 +137,39 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: 'center',
     color: 'white',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  ratingInput: {
+    flex: 1,
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginRight: 10,
+    color: 'black', 
+  },
+  submitButton: {
+    backgroundColor: '#373F51',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  submittedMessage: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: 'white',
+    marginTop: 10,
   },
   youtubeButton: {
     backgroundColor: '#FF0000',
