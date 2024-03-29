@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { getAuth } from 'firebase/auth'; 
-import { app } from './firebase'; 
+import { app } from '../Firebase/firebase'; 
 
 const UserProfileScreen = ({ navigation }) => {
   const auth = getAuth(app); 

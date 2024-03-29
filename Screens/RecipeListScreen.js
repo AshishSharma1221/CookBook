@@ -102,7 +102,7 @@ const RecipeListScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
-        source={orientation === 'portrait' ? require('./portrait_bg.png') : require('./landscape_bg.png')}
+        source={orientation === 'portrait' ? require('../Images/portrait_bg.png') : require('../Images/landscape_bg.png')}
         style={styles.backgroundImage}
       >
         <View style={styles.container}>
