@@ -4,12 +4,18 @@ import { View, TextInput, Button, FlatList, Text, StyleSheet, SafeAreaView, Touc
 const SearchBar = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [searchType, setSearchType] = useState('name');
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`
-      );
+      let apiUrl = '';
+      if (searchType === 'name') {
+        apiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`;
+      } else if (searchType === 'ingredient') {
+        apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchQuery}`;
+      }
+
+      const response = await fetch(apiUrl);
 
       if (response.ok) {
         const data = await response.json();
@@ -32,13 +38,29 @@ const SearchBar = ({ navigation }) => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Search for food recipes..."
+            placeholder={`Search by ${searchType === 'name' ? 'name' : 'ingredient'}...`}
             value={searchQuery}
             onChangeText={(text) => setSearchQuery(text)}
           />
 
           <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
             <Text style={styles.searchButtonText}>Search</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.toggleContainer}>
+          <TouchableOpacity
+            style={[styles.toggleButton, searchType === 'name' && styles.toggleButtonActive]}
+            onPress={() => setSearchType('name')}
+          >
+            <Text style={styles.toggleButtonText}>Search by Name</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.toggleButton, searchType === 'ingredient' && styles.toggleButtonActive]}
+            onPress={() => setSearchType('ingredient')}
+          >
+            <Text style={styles.toggleButtonText}>Search by Ingredient</Text>
           </TouchableOpacity>
         </View>
 
@@ -93,6 +115,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   searchButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  toggleButton: {
+    flex: 1,
+    backgroundColor: '#ccc',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    paddingVertical: 10,
+    marginHorizontal: 5,
+  },
+  toggleButtonActive: {
+    backgroundColor: '#007bff',
+  },
+  toggleButtonText: {
     color: '#fff',
     fontSize: 16,
   },
