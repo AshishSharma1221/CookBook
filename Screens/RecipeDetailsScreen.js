@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, ImageBackground, TouchableOpacity, Linking, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, ImageBackground, TouchableOpacity, Linking, TextInput, Share } from 'react-native';
 
 const RecipeDetailsScreen = ({ route, navigation }) => {
   const { recipe } = route.params;
@@ -22,10 +22,32 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
     return ingredients;
   };
 
+  const getIngredientsText = () => {
+    let ingredientsText = '';
+    for (let i = 1; i <= 20; i++) {
+      const ingredientKey = `strIngredient${i}`;
+      const measureKey = `strMeasure${i}`;
+      if (recipe[ingredientKey]) {
+        ingredientsText += `${recipe[ingredientKey]} - ${recipe[measureKey]}\n`;
+      }
+    }
+    return ingredientsText;
+  };
+
   const submitRating = () => {
     console.log('Rating submitted:', rating);
     setRating('');
     setIsRatingSubmitted(true);
+  };
+
+  const shareRecipe = () => {
+    const recipeDetails = `Recipe: ${recipe.strMeal}\nCategory: ${recipe.strCategory}\nArea: ${recipe.strArea}\nView Recipe Source: ${recipe.strSource}`;
+    
+    Share.share({
+      message: recipeDetails,
+    })
+    .then(result => console.log(result))
+    .catch(error => console.log(error));
   };
 
   return (
@@ -56,6 +78,9 @@ const RecipeDetailsScreen = ({ route, navigation }) => {
           {isRatingSubmitted && (
             <Text style={styles.submittedMessage}>Thanks for submitting rating!</Text>
           )}
+          <TouchableOpacity style={styles.shareButton} onPress={shareRecipe}>
+            <Text style={styles.shareButtonText}>Share Recipe</Text>
+          </TouchableOpacity>
           {recipe.strYoutube && (
             <TouchableOpacity
               style={styles.youtubeButton}
@@ -170,6 +195,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     marginTop: 10,
+  },
+  shareButton: {
+    backgroundColor: '#FFA500',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  shareButtonText: {
+    color: '#282828',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   youtubeButton: {
     backgroundColor: '#FF0000',
