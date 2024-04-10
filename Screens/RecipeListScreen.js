@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, SectionList, TouchableOpacity, Dimensions, ImageBackground, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SectionList, TouchableOpacity, Dimensions, ImageBackground, SafeAreaView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const RecipeListScreen = () => {
@@ -114,7 +114,11 @@ const RecipeListScreen = () => {
             renderSectionHeader={renderSectionHeader}
             stickySectionHeadersEnabled={false}
           />
-          {loading && <Text>Loading...</Text>}
+          {loading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#841584" />
+            </View>
+          )}
           <View style={styles.sliderContainer}>
             {availableLetters.map(letter => (
               <TouchableOpacity
@@ -190,6 +194,13 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{ translateX: -25 }, { translateY: -25 }], // Centering the loader
+    zIndex: 1, // Ensure it's above other content
   },
 });
 

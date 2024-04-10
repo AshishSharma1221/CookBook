@@ -23,14 +23,14 @@ const SignInScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Sign In</Text>
-        <Text>Email:</Text>
+        <Text style={styles.label}>Email:</Text>
         <TextInput
           style={styles.input}
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
         />
-        <Text>Password:</Text>
+        <Text style={styles.label}>Password:</Text>
         <TextInput
           style={styles.input}
           value={password}
@@ -40,7 +40,7 @@ const SignInScreen = ({ navigation }) => {
         {errorMessage && ( // Conditionally rendering error message
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         )}
-        <Button title="Sign In" onPress={handleSignIn} />
+        <Button title="Sign In" onPress={handleSignIn} color="#841584" />
       </View>
     </View>
   );
@@ -51,39 +51,46 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor:'pink'
+    backgroundColor: '#f0f0f0', // Subtle background color
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    backgroundColor:'lightgrey',
+    borderRadius: 15,
     padding: 20,
-    elevation: 3,
+    elevation: 5,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 3,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
   },
   cardTitle: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
+    color: '#841584', // Title color
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333', // Label color
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    marginBottom: 10,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 15,
     padding: 10,
-    paddingHorizontal: 'auto'
+    backgroundColor: '#f9f9f9', // Input background color
+    width: 300, // Fixed width for the input fields
   },
   errorMessage: {
     color: 'red',
     marginBottom: 10,
+    textAlign: 'center',
   },
 });
 
