@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, Modal, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, Modal, SafeAreaView, TouchableWithoutFeedback, useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const PhotoGalleryScreen = () => {
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+
   const [ingredients, setIngredients] = useState([]);
   const [filteredIngredients, setFilteredIngredients] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,15 +45,15 @@ const PhotoGalleryScreen = () => {
   const renderIngredientItem = ({ item }) => (
     <TouchableOpacity style={styles.ingredientItem} onPress={() => handleIngredientPress(item)}>
       <Image source={{ uri: `https://www.themealdb.com/images/ingredients/${item.strIngredient}-Small.png` }} style={styles.ingredientImage} />
-      <Text style={styles.ingredientName}>{item.strIngredient}</Text>
+      <Text style={[styles.ingredientName, isDarkMode && styles.ingredientNameDark]}>{item.strIngredient}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView style={[styles.container, isDarkMode && styles.containerDark]}>
+      <View style={[styles.header, isDarkMode && styles.headerDark]}>
         <TextInput
-          style={styles.searchInput}
+          style={[styles.searchInput, isDarkMode && styles.searchInputDark]}
           placeholder="Search ingredients..."
           value={searchQuery}
           onChangeText={handleSearch}
@@ -73,8 +76,8 @@ const PhotoGalleryScreen = () => {
                       <Ionicons name="close" size={24} color="white" />
                     </TouchableOpacity>
                     <Image source={{ uri: `https://www.themealdb.com/images/ingredients/${selectedIngredient.strIngredient}.png` }} style={styles.modalImage} />
-                    <Text style={styles.modalIngredientName}>{selectedIngredient.strIngredient}</Text>
-                    <Text style={styles.modalIngredientDescription}>{selectedIngredient.strDescription}</Text>
+                    <Text style={[styles.modalIngredientName, isDarkMode && styles.modalIngredientNameDark]}>{selectedIngredient.strIngredient}</Text>
+                    <Text style={[styles.modalIngredientDescription, isDarkMode && styles.modalIngredientDescriptionDark]}>{selectedIngredient.strDescription}</Text>
                   </>
                 )}
               </View>
@@ -91,11 +94,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  containerDark: {
+    backgroundColor: '#000',
+  },
   header: {
     padding: 16,
     backgroundColor: '#fff',
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
+  },
+  headerDark: {
+    backgroundColor: '#000',
   },
   searchInput: {
     backgroundColor: '#f0f0f0',
@@ -103,6 +112,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     fontSize: 16,
+  },
+  searchInputDark: {
+    backgroundColor: '#333',
+    color: '#fff',
   },
   listContent: {
     padding: 16,
@@ -120,6 +133,9 @@ const styles = StyleSheet.create({
   },
   ingredientName: {
     fontSize: 16,
+  },
+  ingredientNameDark: {
+    color: '#fff',
   },
   overlay: {
     flex: 1,
@@ -144,8 +160,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  modalIngredientNameDark: {
+    color: '#fff',
+  },
   modalIngredientDescription: {
     fontSize: 16,
+  },
+  modalIngredientDescriptionDark: {
+    color: '#fff',
   },
   closeButton: {
     position: 'absolute',

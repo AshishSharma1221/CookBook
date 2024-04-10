@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, ScrollView, useColorScheme } from 'react-native';
 
 const CategoriesScreen = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,24 +30,24 @@ const CategoriesScreen = ({ navigation }) => {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView style={[styles.container, isDarkMode && styles.containerDark]}>
+        <ActivityIndicator size="large" color={isDarkMode ? '#fff' : '#0000ff'} />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, isDarkMode && styles.containerDark]}>
       <ScrollView>
         <View style={styles.categoriesContainer}>
           {categories.map((category) => (
             <TouchableOpacity
               key={category.idCategory}
-              style={styles.categoryItem}
+              style={[styles.categoryItem, isDarkMode && styles.categoryItemDark]}
               onPress={() => handleCategoryPress(category.strCategory)}
             >
               <Image source={{ uri: category.strCategoryThumb }} style={styles.categoryImage} />
-              <Text style={styles.categoryName}>{category.strCategory}</Text>
+              <Text style={[styles.categoryName, isDarkMode && styles.categoryNameDark]}>{category.strCategory}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -60,6 +63,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
+  containerDark: {
+    backgroundColor: '#111',
+  },
   categoriesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -74,6 +80,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
   },
+  categoryItemDark: {
+    borderColor: '#888',
+  },
   categoryImage: {
     width: '100%',
     height: 150,
@@ -84,6 +93,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     paddingVertical: 10,
+  },
+  categoryNameDark: {
+    color: '#eee',
   },
 });
 

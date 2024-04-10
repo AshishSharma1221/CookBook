@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, useColorScheme } from 'react-native';
 
 const FilteredRecipes = ({ route, navigation }) => {
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
+
   const { category } = route.params;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,20 +31,22 @@ const FilteredRecipes = ({ route, navigation }) => {
 
   const renderRecipeItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.recipeItem}
+      style={[styles.recipeItem, isDarkMode && styles.recipeItemDark]}
       onPress={() => handleRecipePress(item)}
     >
       <Image source={{ uri: item.strMealThumb }} style={styles.recipeImage} />
-      <Text style={styles.recipeName}>{item.strMeal}</Text>
+      <Text style={[styles.recipeName, isDarkMode && styles.recipeNameDark]}>{item.strMeal}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, isDarkMode && styles.containerDark]}>
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color={isDarkMode ? '#fff' : '#0000ff'} />
       ) : recipes.length === 0 ? (
-        <Text style={styles.noRecipesText}>No recipes found in the "{category}" category.</Text>
+        <Text style={[styles.noRecipesText, isDarkMode && styles.noRecipesTextDark]}>
+          No recipes found in the "{category}" category.
+        </Text>
       ) : (
         <FlatList
           data={recipes}
@@ -60,12 +65,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
+  containerDark: {
+    backgroundColor: '#111',
+  },
   recipeItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+  },
+  recipeItemDark: {
+    borderBottomColor: '#888',
   },
   recipeImage: {
     width: 50,
@@ -75,10 +86,16 @@ const styles = StyleSheet.create({
   recipeName: {
     fontSize: 16,
   },
+  recipeNameDark: {
+    color: '#eee',
+  },
   noRecipesText: {
     fontSize: 16,
     textAlign: 'center',
     marginTop: 20,
+  },
+  noRecipesTextDark: {
+    color: '#eee',
   },
 });
 
